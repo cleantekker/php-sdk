@@ -31,6 +31,7 @@ class Api
             'client'    => [Client::class, $this],
             'cache'     => [Cache::class, $this],
             'token'     => [Token::class, $this],
+            'basicAuth' => [BasicAuth::class, $this],
         ];
         return $this;
     }
