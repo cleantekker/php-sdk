@@ -1,11 +1,11 @@
 <?php
 
-namespace Dummy\Container;
+namespace Cleantekker\Container;
 
-use Dummy\Config;
-use Dummy\Provider\Core;
-use Dummy\Provider\Entity;
-use Dummy\Provider\Guzzle;
+use Cleantekker\Config;
+use Cleantekker\Provider\Core;
+use Cleantekker\Provider\Entity;
+use Cleantekker\Provider\Guzzle;
 use League\Container\Container;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;

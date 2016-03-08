@@ -1,10 +1,10 @@
 <?php
 
-namespace Dummy\Provider;
+namespace Cleantekker\Provider;
 
 use GuzzleHttp\Client;
-use Dummy\Http\Client\AdapterInterface;
-use Dummy\Http\Client\GuzzleAdapter;
+use Cleantekker\Http\Client\AdapterInterface;
+use Cleantekker\Http\Client\GuzzleAdapter;
 use League\Container\Argument\RawArgument;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 

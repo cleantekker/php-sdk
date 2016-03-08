@@ -1,8 +1,8 @@
 <?php
 
-namespace Dummy\Entity;
+namespace Cleantekker\Entity;
 
-use Dummy\Http\Client\AdapterInterface;
+use Cleantekker\Http\Client\AdapterInterface;
 
 abstract class AbstractEntity
 {

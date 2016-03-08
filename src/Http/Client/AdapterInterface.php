@@ -1,10 +1,10 @@
 <?php
 
-namespace Dummy\Http\Client;
+namespace Cleantekker\Http\Client;
 
 use Exception;
 use GuzzleHttp\Exception\ClientException;
-use Dummy\Http\Response;
+use Cleantekker\Http\Response;
 
 interface AdapterInterface
 {

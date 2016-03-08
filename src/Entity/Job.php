@@ -1,6 +1,6 @@
 <?php
 
-namespace Dummy\Entity;
+namespace Cleantekker\Entity;
 
 class Job extends AbstractEntity
 {

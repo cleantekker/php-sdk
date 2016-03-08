@@ -1,9 +1,9 @@
 <?php
 
-namespace Dummy\Provider;
+namespace Cleantekker\Provider;
 
-use Dummy\Entity\Job;
-use Dummy\Http\Client\AdapterInterface;
+use Cleantekker\Entity\Job;
+use Cleantekker\Http\Client\AdapterInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class Entity extends AbstractServiceProvider

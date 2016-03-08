@@ -1,6 +1,6 @@
 <?php
 
-namespace Dummy;
+namespace Cleantekker;
 
 use League\Container\Container;
 

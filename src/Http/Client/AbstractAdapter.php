@@ -1,9 +1,9 @@
 <?php
 
-namespace Dummy\Http\Client;
+namespace Cleantekker\Http\Client;
 
 use GuzzleHttp\Exception\ClientException;
-use Dummy\Http\Response;
+use Cleantekker\Http\Response;
 
 abstract class AbstractAdapter implements AdapterInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Dummy;
+namespace Cleantekker;
 
-use Dummy\Http\Client\AdapterInterface;
+use Cleantekker\Http\Client\AdapterInterface;
 use League\Container\Container;
 
 trait CommonTrait

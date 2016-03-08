@@ -1,6 +1,6 @@
 <?php
 
-namespace Dummy\Provider;
+namespace Cleantekker\Provider;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
@@ -31,10 +31,10 @@ class Core extends AbstractServiceProvider
     {
         $container = $this->getContainer();
         $container->add('endpoint', function() use ($container) {
-            return new \Dummy\Endpoint($container);
+            return new \Cleantekker\Endpoint($container);
         });
         $container->add('token', function() use ($container) {
-            return new \Dummy\Token($container);
+            return new \Cleantekker\Token($container);
         });
     }
 }

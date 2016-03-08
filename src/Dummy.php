@@ -1,11 +1,10 @@
 <?php
 
-namespace Dummy;
+namespace Cleantekker;
 
-use League\Container\Container;
-use Dummy\Container\Builder;
+use Cleantekker\Container\Builder;
 
-class Dummy
+class Cleantekker
 {
     use CommonTrait;
     

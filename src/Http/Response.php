@@ -1,6 +1,6 @@
 <?php
 
-namespace Dummy\Http;
+namespace Cleantekker\Http;
 
 use Illuminate\Support\Collection;
 

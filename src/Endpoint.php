@@ -1,12 +1,14 @@
 <?php
 
-namespace Dummy;
+namespace Cleantekker;
+
+use League\Container\Container;
 
 class Endpoint
 {
     private $container;
     
-    public function __construct($container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }

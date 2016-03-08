@@ -1,11 +1,11 @@
 <?php
 
-namespace Dummy\Http\Client;
+namespace Cleantekker\Http\Client;
 
 use Exception;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
-use Dummy\Http\Response;
+use Cleantekker\Http\Response;
 
 class GuzzleAdapter extends AbstractAdapter
 {
