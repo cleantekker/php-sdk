@@ -36,7 +36,7 @@ class Guzzle extends AbstractServiceProvider
         $config    = $container->get('config');
         
         $args = [
-            'base_uri' => sprintf('%s://%s/%s/', $config->get('apiScheme'), $config->get('apiHost'), $config->get('apiVersion')),
+            'base_uri' => sprintf('%s://%s/%s/', $config->get('scheme'), $config->get('host'), $config->get('version')),
         ];
         if ($config->get('token') != "") {
             $args['headers'] = [

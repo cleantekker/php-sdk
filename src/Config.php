@@ -23,10 +23,11 @@ class Config extends AbstractConfig
     protected function getDefaults()
     {
         return [
-            'token'      => null,
-            'apiScheme'  => 'https',
-            'apiHost'    => 'api.domain.com',
-            'apiVersion' => 'v1',
+            'key'     => null,
+            'token'   => null,
+            'scheme'  => 'https',
+            'host'    => 'api.domain.com',
+            'version' => 'v1',
         ];
     }
 }

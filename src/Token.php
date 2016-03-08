@@ -2,7 +2,6 @@
 
 namespace Dummy;
 
-use Dummy\Http\Client\AdapterInterface;
 use League\Container\Container;
 
 class Token
@@ -26,11 +25,14 @@ class Token
         return $this;
     }
 
-    public function getFromApiKey($key)
+    public function getFromApiKey($key = null)
     {
-        $config   = $this->getConfig();
+        $config = $this->getConfig();
+        if ($key === null) {
+            $key = $config->get('key');
+        }
         $response = $this->request('GET', 'users/session/new', [
-            'base_uri' => sprintf('%s://%s/', $config->get('apiScheme'), $config->get('apiHost')),
+            'base_uri' => sprintf('%s://%s/', $config->get('scheme'), $config->get('host')),
             'headers'  => [
                 'Authorization' => sprintf('Bearer %s', $key)
             ],
@@ -42,7 +44,7 @@ class Token
     {
         $config   = $this->getConfig();
         $response = $this->request('GET', 'users/session/renew', [
-            'base_uri' => sprintf('%s://%s/', $config->get('apiScheme'), $config->get('apiHost')),
+            'base_uri' => sprintf('%s://%s/', $config->get('scheme'), $config->get('host')),
             'headers'  => [
                 'Authorization' => sprintf('Bearer %s', $this->get())
             ],

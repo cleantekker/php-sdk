@@ -19,12 +19,8 @@ class Dummy
         return $this->getContainer()->get('token');
     }
     
-    public function endpoint($name = null, array $params = [])
+    public function endpoint()
     {
-        $endpoint = $this->getContainer()->get('endpoint');
-        if ($name) {
-            return call_user_func_array(array($endpoint, $name), $params);
-        }
-        return $endpoint;
+        return $this->getContainer()->get('endpoint');
     }
 }
