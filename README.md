@@ -1,4 +1,4 @@
-# Cleantekker API Client - this is WIP, don't use!
+# Work in progress
 
 ### Inspiration  
 This is highly inspired from https://github.com/hassankhan/instagram-sdk 
