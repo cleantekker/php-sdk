@@ -2,69 +2,31 @@
 
 namespace Dummy;
 
-class Config 
+use Noodlehaus\AbstractConfig;
+
+class Config extends AbstractConfig
 {
-    /** 
-     * @var array
-     */
-    private $params = [
-        'api.host'        => 'api.dummy.com',
-        'api.host.scheme' => 'https',
-        'api.version'     => 'v1',
-        'api.key'         => '',
-        'api.token'       => null,
-        'cache.path'      => '/tmp/',
-        'cache.duration'  => 3600,
-    ];
-
     /**
-     * Config constructor.
-     * @param array $params
+     * Constructor method and sets default options, if any
+     *
+     * @param array $data
      */
-    public function __construct(array $params = [])
+    public function __construct(array $data)
     {
-        $this->setParams($params);
+        $filteredData = array_filter(array_merge($this->getDefaults(), $data));
+        parent::__construct($filteredData);
     }
 
     /**
-     * @param array $params
-     * @return $this
+     * {@inheritDoc}
      */
-    public function setParams(array $params = [])
+    protected function getDefaults()
     {
-        foreach ($params as $key => $value) {
-            $this->params[$key] = $value;
-        }
-        return $this;
-    }
-
-    /**
-     * @param $key
-     * @param null $default
-     * @return null
-     */
-    public function get($key, $default = null)
-    {
-        return isset($this->params[$key]) || array_key_exists($key, $this->params) ? $this->params[$key] : $default;
-    }
-
-    /**
-     * @param $key
-     * @param $value
-     * @return $this
-     */
-    public function set($key, $value)
-    {
-        $this->params[$key] = $value;
-        return $this;
-    }
-
-    /**
-     * @param string $append
-     * @return string
-     */
-    public function getApiUrl($append = '')
-    {
-        return sprintf('%s://%s/%s/%s', $this->get('api.host.scheme'), $this->get('api.host'), $this->get('api.version'), $append);
+        return [
+            'token'      => null,
+            'apiScheme'  => 'https',
+            'apiHost'    => 'api.domain.com',
+            'apiVersion' => 'v1',
+        ];
     }
 }

@@ -2,81 +2,58 @@
 
 namespace Dummy;
 
+use Dummy\Http\Client\AdapterInterface;
+use League\Container\Container;
+
 class Token
 {
-    /**
-     * @var Api
-     */ 
-    private $api;
+    use CommonTrait;
 
-    /**
-     * @var string
-     */
-    private $cacheKey;
-
-    /**
-     * @var
-     */
-    private $token;
-
-    /**
-     * Token constructor.
-     * @param Api $api
-     */
-    public function __construct(Api $api)
+    public function __construct(Container $container)
     {
-        $this->api      = $api;
-        $this->cacheKey = sha1($this->api->config->get('api.key'));
-        $this->token    = $this->api->config->get('api.token'); 
+        $this->setContainer($container);
     }
 
-    /**
-     * @return mixed
-     * @throws \Exception
-     */
     public function get()
     {
-        if ($this->token !== null) {
-            return $this->token;
-        }
-
-        if ($this->api->cache->contains($this->cacheKey)) {
-            return $this->token = $this->api->cache->fetch($this->cacheKey);
-        }
-        
-        $config = $this->api->config;
-        $client = new \GuzzleHttp\Client([
-            'base_uri' => sprintf('%s://%s/', $config->get('api.host.scheme'), $config->get('api.host')),
-            'timeout'  => 5,
-            'headers'  => [
-                'Content-Type'  => 'application/json',
-                'Authorization' => sprintf('Bearer %s', $this->api->config->get('api.key')),
-            ],
-        ]);
-
-        $response = $client->get('users/session/new');
-        $response = json_decode($response->getBody(), true);
-        $this->set(isset($response['data']['token']) ? $response['data']['token'] : '');
-
-        if (isset($response['data']['message'])) {
-            throw new \Exception($response['data']['message'], $response['data']['code']);
-        }
-
-        return $this->token;
+        return $this->getConfig()->get('token');
     }
 
-    /**
-     * @param $token
-     * @return $this
-     */
     public function set($token)
     {
-        $this->token = $token;
-        if (empty($token)) {
-            $this->api->cache->delete($this->cacheKey);
-        } else {
-            $this->api->cache->save($this->cacheKey, $token, $this->api->config->get('cache.duration'));
-        }
+        $this->getConfig()->set('token', $token);
+        $this->getHttpAdapter()->setHeader('Authorization', sprintf('Bearer %s', $token));
         return $this;
+    }
+
+    public function getFromApiKey($key)
+    {
+        $config   = $this->getConfig();
+        $response = $this->request('GET', 'users/session/new', [
+            'base_uri' => sprintf('%s://%s/', $config->get('apiScheme'), $config->get('apiHost')),
+            'headers'  => [
+                'Authorization' => sprintf('Bearer %s', $key)
+            ],
+        ]);
+        return $response->get()['token'];
+    }
+    
+    public function getNew()
+    {
+        $config   = $this->getConfig();
+        $response = $this->request('GET', 'users/session/renew', [
+            'base_uri' => sprintf('%s://%s/', $config->get('apiScheme'), $config->get('apiHost')),
+            'headers'  => [
+                'Authorization' => sprintf('Bearer %s', $this->get())
+            ],
+        ]);
+        return $response->get()['token'];
+    }
+
+    public function refresh()
+    {
+        $token = $this->getNew();
+        $this->set($token);
+        return $token;
     }
 }
