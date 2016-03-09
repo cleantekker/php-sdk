@@ -30,10 +30,10 @@ class Core extends AbstractServiceProvider
     public function register()
     {
         $container = $this->getContainer();
-        $container->add('endpoint', function() use ($container) {
+        $container->share('endpoint', function() use ($container) {
             return new \Cleantekker\Endpoint($container);
         });
-        $container->add('token', function() use ($container) {
+        $container->share('token', function() use ($container) {
             return new \Cleantekker\Token($container);
         });
     }
