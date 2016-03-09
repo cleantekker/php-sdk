@@ -3,9 +3,15 @@
 namespace Cleantekker\Http;
 
 use Illuminate\Support\Collection;
+use Cleantekker\ObjectTrait;
 
 class Response
 {
+    /**
+     * Object setters and getters
+     */
+    use ObjectTrait;
+    
     /**
      * @var array
      */

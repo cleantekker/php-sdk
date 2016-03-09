@@ -2,6 +2,7 @@
 
 namespace Cleantekker\Container;
 
+use Cleantekker\ObjectTrait;
 use Cleantekker\Config;
 use Cleantekker\Provider\Core;
 use Cleantekker\Provider\Entity;
@@ -15,7 +16,7 @@ use League\Container\ServiceProvider\ServiceProviderInterface;
 
 class Builder implements ContainerAwareInterface
 {
-    use ContainerAwareTrait;
+    use ObjectTrait, ContainerAwareTrait;
 
     /**
      * Default application service providers.

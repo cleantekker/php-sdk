@@ -3,9 +3,15 @@
 namespace Cleantekker\Entity;
 
 use Cleantekker\Http\Client\AdapterInterface;
+use Cleantekker\ObjectTrait;
 
 abstract class AbstractEntity
 {
+    /**
+     * Object setters and getters
+     */
+    use ObjectTrait;
+    
     /**
      * @var AdapterInterface
      */

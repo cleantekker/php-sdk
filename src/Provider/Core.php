@@ -3,9 +3,15 @@
 namespace Cleantekker\Provider;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use Cleantekker\ObjectTrait;
 
 class Core extends AbstractServiceProvider
 {
+    /**
+     * Object setters and getters
+     */
+    use ObjectTrait;
+    
     /**
      * The provides array is a way to let the container
      * know that a service is provided by this service

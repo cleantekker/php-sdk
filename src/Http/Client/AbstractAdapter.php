@@ -3,10 +3,15 @@
 namespace Cleantekker\Http\Client;
 
 use GuzzleHttp\Exception\ClientException;
-use Cleantekker\Http\Response;
+use Cleantekker\ObjectTrait;
 
 abstract class AbstractAdapter implements AdapterInterface
 {
+    /**
+     * Object setters and getters
+     */   
+    use ObjectTrait;
+    
     /**
      * {@inheritDoc}
      */

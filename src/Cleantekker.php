@@ -6,19 +6,19 @@ use Cleantekker\Container\Builder;
 
 class Cleantekker
 {
-    use CommonTrait;
+    use ObjectTrait, CommonTrait;
     
     public function __construct(array $config = [])
     {
         $this->setContainer((new Builder($config))->getContainer());
     }
     
-    public function token()
+    public function getToken()
     {
         return $this->getContainer()->get('token');
     }
     
-    public function endpoint()
+    public function getEndpoint()
     {
         return $this->getContainer()->get('endpoint');
     }

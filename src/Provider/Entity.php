@@ -2,12 +2,18 @@
 
 namespace Cleantekker\Provider;
 
+use Cleantekker\ObjectTrait;
 use Cleantekker\Entity\Job;
 use Cleantekker\Http\Client\AdapterInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class Entity extends AbstractServiceProvider
 {
+    /**
+     * Object setters and getters
+     */
+    use ObjectTrait;
+
     /**
      * The provides array is a way to let the container
      * know that a service is provided by this service

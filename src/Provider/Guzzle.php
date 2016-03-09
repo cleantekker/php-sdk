@@ -2,6 +2,7 @@
 
 namespace Cleantekker\Provider;
 
+use Cleantekker\ObjectTrait;
 use GuzzleHttp\Client;
 use Cleantekker\Http\Client\AdapterInterface;
 use Cleantekker\Http\Client\GuzzleAdapter;
@@ -10,6 +11,11 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class Guzzle extends AbstractServiceProvider
 {
+    /**
+     * Object setters and getters
+     */
+    use ObjectTrait;
+    
     /**
      * The provides array is a way to let the container
      * know that a service is provided by this service

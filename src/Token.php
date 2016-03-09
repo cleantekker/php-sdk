@@ -6,7 +6,7 @@ use League\Container\Container;
 
 class Token
 {
-    use CommonTrait;
+    use ObjectTrait, CommonTrait;
 
     public function __construct(Container $container)
     {
