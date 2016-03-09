@@ -1,4 +1,4 @@
-# Work in progress
+# Work in progress - Please do not install this package for now!
 
 ### Install  
 Run `composer require cleantekker/php-sdk` in your project root.
