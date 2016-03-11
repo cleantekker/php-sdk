@@ -16,7 +16,50 @@ abstract class AbstractAdapter implements AdapterInterface
      * {@inheritDoc}
      */
     abstract public function request($method, $uri, array $parameters = []);
-    
+
+    /**
+     * @param $uri
+     * @param array $parameters
+     * @return \Cleantekker\Http\Response
+     */
+    public function get($uri, array $parameters = [])
+    {
+        return $this->request('GET', $uri, $parameters);
+    }
+
+    /**
+     * @param $uri
+     * @param array $parameters
+     * @return \Cleantekker\Http\Response
+     */
+    public function post($uri, array $parameters = [])
+    {
+        return $this->request('POST', $uri, $parameters);
+    }
+
+    /**
+     * @param $uri
+     * @param array $parameters
+     * @return \Cleantekker\Http\Response
+     */
+    public function put($uri, array $parameters = [])
+    {
+        return $this->request('PUT', $uri, $parameters);
+    }
+
+    /**
+     * @param $uri
+     * @return \Cleantekker\Http\Response
+     */
+    public function delete($uri)
+    {
+        return $this->request('DELETE', $uri);
+    }
+
+    /**
+     * @param ClientException $exception
+     * @return \Exception
+     */
     protected function resolveExceptionClass(ClientException $exception)
     {
         $response = $exception->getResponse()->getBody();

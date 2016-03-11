@@ -38,7 +38,7 @@ abstract class AbstractEntity
      */
     public function all(array $params = [])
     {
-        return $this->client->request('GET', $this->basePath, $params);
+        return $this->client->get($this->basePath, $params);
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class AbstractEntity
      */
     public function one($id, array $params = [])
     {
-        return $this->client->request('GET', $this->basePath . '/' . $id, $params);
+        return $this->client->get($this->basePath . '/' . $id, $params);
     }
 
     /**
@@ -57,7 +57,7 @@ abstract class AbstractEntity
      */
     public function create(array $params = [])
     {
-        return $this->client->request('POST', $this->basePath, [
+        return $this->client->post($this->basePath, [
             'json' => $params
         ]);
     }
@@ -69,7 +69,7 @@ abstract class AbstractEntity
      */
     public function update($id, array $params = [])
     {
-        return $this->client->request('PUT', $this->basePath . '/' . $id, [
+        return $this->client->put($this->basePath . '/' . $id, [
             'json' => $params
         ]);
     }
@@ -80,6 +80,6 @@ abstract class AbstractEntity
      */
     public function delete($id)
     {
-        return $this->client->request('DELETE', $this->basePath . '/' . $id);
+        return $this->client->delete($this->basePath . '/' . $id);
     }
 }
