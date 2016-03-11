@@ -2,19 +2,15 @@
 
 namespace Cleantekker;
 
-use League\Container\Container;
-
 class Token
 {
     use ObjectTrait, CommonTrait;
 
     /**
      * Token constructor.
-     * @param Container $container
      */
-    public function __construct(Container $container)
+    public function __construct()
     {
-        $this->setContainer($container);
     }
 
     /**

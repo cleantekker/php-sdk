@@ -6,6 +6,7 @@ use Cleantekker\Container\Builder;
 
 class Cleantekker
 {
+
     use ObjectTrait, CommonTrait;
 
     /**
@@ -16,7 +17,7 @@ class Cleantekker
     {
         $this->setContainer((new Builder($config))->getContainer());
     }
-
+    
     /**
      * @return mixed
      */

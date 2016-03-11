@@ -2,8 +2,6 @@
 
 namespace Cleantekker;
 
-use League\Container\Container;
-
 class Endpoint
 {
     /**
@@ -18,11 +16,10 @@ class Endpoint
 
     /**
      * Endpoint constructor.
-     * @param Container $container
      */
-    public function __construct(Container $container)
+    public function __construct()
     {
-        $this->container = $container;
+        $this->container = Container::get();
     }
 
     /**

@@ -11,23 +11,22 @@ namespace Cleantekker;
 trait ObjectTrait
 {
     /**
-     * @param $object
      * @param array $properties
-     * @return mixed
+     * @return $this
      */
-    public function configure($object, array $properties = [])
+    public function configure(array $properties = [])
     {
         foreach ($properties as $name => $value) {
-            $object->$name = $value;
+            $this->$name = $value;
         }
-        return $object;
+        return $this;
     }
 
     /**
      * @param $name
      * @return mixed
-     * @throws InvalidCallException
-     * @throws UnknownPropertyException
+     * @throws \Exception
+     * @throws \Exception
      */
     public function __get($name)
     {
@@ -35,17 +34,16 @@ trait ObjectTrait
         if (method_exists($this, $getter)) {
             return $this->$getter();
         } elseif (method_exists($this, 'set' . $name)) {
-            throw new InvalidCallException('Getting write-only property: ' . get_class($this) . '::' . $name);
+            throw new \Exception('Getting write-only property: ' . get_class($this) . '::' . $name);
         } else {
-            throw new UnknownPropertyException('Getting unknown property: ' . get_class($this) . '::' . $name);
+            throw new \Exception('Getting unknown property: ' . get_class($this) . '::' . $name);
         }
     }
 
     /**
      * @param $name
      * @param $value
-     * @throws InvalidCallException
-     * @throws UnknownPropertyException
+     * @throws Exception
      */
     public function __set($name, $value)
     {
@@ -53,9 +51,9 @@ trait ObjectTrait
         if (method_exists($this, $setter)) {
             $this->$setter($value);
         } elseif (method_exists($this, 'get' . $name)) {
-            throw new InvalidCallException('Setting read-only property: ' . get_class($this) . '::' . $name);
+            throw new Exception('Setting read-only property: ' . get_class($this) . '::' . $name);
         } else {
-            throw new UnknownPropertyException('Setting unknown property: ' . get_class($this) . '::' . $name);
+            throw new Exception('Setting unknown property: ' . get_class($this) . '::' . $name);
         }
     }
 
@@ -75,7 +73,7 @@ trait ObjectTrait
 
     /**
      * @param $name
-     * @throws InvalidCallException
+     * @throws Exception
      */
     public function __unset($name)
     {
@@ -83,7 +81,7 @@ trait ObjectTrait
         if (method_exists($this, $setter)) {
             $this->$setter(null);
         } elseif (method_exists($this, 'get' . $name)) {
-            throw new InvalidCallException('Unsetting read-only property: ' . get_class($this) . '::' . $name);
+            throw new Exception('Unsetting read-only property: ' . get_class($this) . '::' . $name);
         }
     }
 }

@@ -4,6 +4,8 @@ namespace Cleantekker\Http;
 
 use Illuminate\Support\Collection;
 use Cleantekker\ObjectTrait;
+use Cleantekker\Http\Client\AdapterInterface;
+use Cleantekker\Container;
 
 class Response
 {
@@ -31,40 +33,46 @@ class Response
      * @var array
      */
     protected $links;
+    
+    /**
+     * @var
+     */
+    protected $itemEnvelope;
 
     /**
      * Creates a new instance of `Response`.
      *
      * @param array $data
-     * @param array $meta
-     * @param array $links
      */
-    public function __construct(array $data = [], array $meta = [], array $links = [])
+    public function __construct(array $data = [])
     {
-        $this->data  = $data;
-        $this->meta  = $meta;
-        $this->links = $links;
+        $this->data  = isset($data['data']) && is_array($data['data']) ? $data['data'] : [];
+        $this->meta  = isset($data['meta']) && is_array($data['meta']) ? $data['meta'] : [];
+        $this->links = isset($data['links']) && is_array($data['links']) ? $data['links'] : [];
         $this->raw = [
-            'data'  => $data,
-            'meta'  => $meta,
-            'links' => $links,
+            'data'  => $this->data,
+            'meta'  => $this->meta,
+            'links' => $this->links,
         ];
+        
+        $this->itemEnvelope = isset($data['itemEnvelope']) ? $data['itemEnvelope'] : [];
     }
 
     /**
      * Creates a new instance of `Response` from a JSON-decoded response body.
      *
      * @param array $response
-     *
+     * 
      * @return static
      */
     public static function createFromJson(array $response = [])
     {
-        $data  = array_key_exists('data', $response)  ? $response['data']  : [];
-        $meta  = array_key_exists('meta', $response)  ? $response['meta']  : [];
-        $links = array_key_exists('links', $response) ? $response['links'] : [];
-
-        return new static($data, $meta, $links);
+        return new static([
+            'data'         => array_key_exists('data', $response)  ? $response['data']  : [],
+            'meta'         => array_key_exists('meta', $response)  ? $response['meta']  : [],
+            'links'        => array_key_exists('links', $response) ? $response['links'] : [],
+            'itemEnvelope' => array_key_exists('itemEnvelope', $response) ? $response['itemEnvelope'] : null,
+        ]);
     }
 
     /**
@@ -84,35 +92,19 @@ class Response
      */
     public function get()
     {
-        return $this->isCollection($this->data) ? new Collection($this->data) : $this->data;
-    }
-
-    /**
-     * Merges the contents of this response with `$response` and returns a new
-     * `Response` instance.
-     *
-     * @param Response $response
-     *
-     * @return Response
-     *
-     * @throws Exception
-     */
-    public function merge(Response $response)
-    {
-        $data  = $response->get();
-        $meta  = $response->getRaw()['meta'];
-        $links = $response->hasPages() ? $response->getRaw()['links'] : [];
-
-        if ($this->isCollection($this->data) && $this->isCollection($data)) {
-            $data = array_flatten([$this->data, $data], 1);
-            return new Response($data, $meta, $links);
+        if (empty($this->itemEnvelope)) {
+            return $this->isCollection($this->data) ? new Collection($this->data) : $this->data;
         }
 
-        if ($this->isRecord($this->data) && $this->isRecord($data)) {
-            return new Response($meta, [$this->data, $data], $links);
+        $className = $this->itemEnvelope;
+        $client    = Container::get()->get(AdapterInterface::class);
+        if ($this->isCollection($this->data)) {
+            return new Collection(array_map(function($item) use ($className, $client) {
+                return (new $className($client))->configure($item);
+            }, $this->data));
         }
 
-        throw new Exception('The response contents cannot be merged');
+        return (new $className($client))->configure($this->data);
     }
 
     /**
@@ -173,7 +165,7 @@ class Response
      */
     public function nextUrl()
     {
-        return $this->hasPages() ? $this->pagination['next'] : null;
+        return $this->hasPages() ? $this->links['next'] : null;
     }
 
     /**

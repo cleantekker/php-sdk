@@ -38,6 +38,12 @@ class GuzzleAdapter extends AbstractAdapter
      */
     public function request($method, $uri, array $parameters = [])
     {
+        $itemEnvelope = null;
+        if (isset($parameters['itemEnvelope'])) {
+            $itemEnvelope = $parameters['itemEnvelope'];
+            unset($parameters['itemEnvelope']);
+        }
+        
         try {
             $response = $this->guzzle->request($method, $uri, array_merge($this->params, $parameters));
 
@@ -57,6 +63,11 @@ class GuzzleAdapter extends AbstractAdapter
         if ($response === null) {
             $response = [];
         }
+        
+        if ($itemEnvelope) {
+            $response['itemEnvelope'] = $itemEnvelope;
+        }
+        
         return Response::createFromJson($response);
     }
 

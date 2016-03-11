@@ -3,31 +3,25 @@
 namespace Cleantekker;
 
 use Cleantekker\Http\Client\AdapterInterface;
-use League\Container\Container;
 
 trait CommonTrait
 {
     /**
-     * @var
-     */
-    protected $container;
-
-    /**
-     * @param Container $container
+     * @param \League\Container\Container $container
      * @return $this
      */
-    public function setContainer(Container $container)
+    public function setContainer(\League\Container\Container $container)
     {
-        $this->container = $container;
+        \Cleantekker\Container::set($container);
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return \League\Container\Container $container
      */
     public function getContainer()
     {
-        return $this->container;
+        return \Cleantekker\Container::get();
     }
 
     /**
