@@ -4,6 +4,8 @@ namespace Cleantekker\Provider;
 
 use Cleantekker\ObjectTrait;
 use Cleantekker\Entity\Job;
+use Cleantekker\Entity\JobType;
+use Cleantekker\Entity\JobCategory;
 use Cleantekker\Http\Client\AdapterInterface;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
@@ -25,6 +27,8 @@ class Entity extends AbstractServiceProvider
      */
     protected $provides = [
         'entity.job',
+        'entity.jobsTypes',
+        'entity.jobsCategories',
     ];
 
     /**
@@ -38,5 +42,7 @@ class Entity extends AbstractServiceProvider
     {
         $container = $this->getContainer();
         $container->share('entity.job', new Job($container->get(AdapterInterface::class)));
+        $container->share('entity.jobsTypes', new JobType($container->get(AdapterInterface::class)));
+        $container->share('entity.jobsCategories', new JobCategory($container->get(AdapterInterface::class)));
     }
 }

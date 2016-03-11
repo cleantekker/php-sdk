@@ -39,7 +39,7 @@ class Response
      * @param array $meta
      * @param array $links
      */
-    public function __construct($data = [], $meta = [], $links = [])
+    public function __construct(array $data = [], array $meta = [], array $links = [])
     {
         $this->data  = $data;
         $this->meta  = $meta;
@@ -58,7 +58,7 @@ class Response
      *
      * @return static
      */
-    public static function createFromJson(array $response)
+    public static function createFromJson(array $response = [])
     {
         $data  = array_key_exists('data', $response)  ? $response['data']  : [];
         $meta  = array_key_exists('meta', $response)  ? $response['meta']  : [];

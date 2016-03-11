@@ -22,4 +22,14 @@ class Endpoint
     {
         return $this->container->get('entity.job');
     }
+    
+    public function getJobsTypes()
+    {
+        return $this->container->get('entity.jobsTypes');
+    }
+
+    public function getJobsCategories()
+    {
+        return $this->container->get('entity.jobsCategories');
+    }
 }

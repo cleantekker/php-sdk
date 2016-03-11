@@ -25,8 +25,21 @@ abstract class AbstractAdapter implements AdapterInterface
         if ($response === null) {
             return new \Exception($exception->getMessage());
         }
-
-        $message = isset($response->message) ? $response->message : $response;
+        if (!empty($response->message)) {
+            $message = (string)$response->message;
+        } elseif (!empty($response->errors)) {
+            $message = $response->errors;
+            if (is_array($response->errors)) {
+                $message = [];
+                foreach ($response->errors as $error) {
+                    $message[] = $error->message;
+                }
+                $message = implode(PHP_EOL, $message);
+            }
+        } else {
+            $message = (string)$response;
+        }
+        
         return new \Exception($message);
     }
 }

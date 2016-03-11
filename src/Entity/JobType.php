@@ -2,10 +2,10 @@
 
 namespace Cleantekker\Entity;
 
-class Job extends AbstractEntity
+class JobType extends AbstractEntity
 {
     /**
      * @var string
      */
-    public $basePath = 'jobs';
+    public $basePath = 'jobs/types';
 }

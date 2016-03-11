@@ -52,8 +52,12 @@ class GuzzleAdapter extends AbstractAdapter
         } catch (Exception $e) {
             throw $e;
         }
-
-        return Response::createFromJson(json_decode($response->getBody()->getContents(), true));
+        
+        $response = json_decode($response->getBody()->getContents(), true);
+        if ($response === null) {
+            $response = [];
+        }
+        return Response::createFromJson($response);
     }
     
     public function setHeader($key, $value)
