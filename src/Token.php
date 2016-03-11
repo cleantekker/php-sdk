@@ -8,16 +8,27 @@ class Token
 {
     use ObjectTrait, CommonTrait;
 
+    /**
+     * Token constructor.
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         $this->setContainer($container);
     }
 
+    /**
+     * @return mixed
+     */
     public function get()
     {
         return $this->getConfig()->get('token');
     }
 
+    /**
+     * @param $token
+     * @return $this
+     */
     public function set($token)
     {
         $this->getConfig()->set('token', $token);
@@ -25,6 +36,10 @@ class Token
         return $this;
     }
 
+    /**
+     * @param null $key
+     * @return mixed
+     */
     public function getFromApiKey($key = null)
     {
         $config = $this->getConfig();
@@ -39,7 +54,10 @@ class Token
         ]);
         return $response->get()['token'];
     }
-    
+
+    /**
+     * @return mixed
+     */
     public function getNew()
     {
         $config   = $this->getConfig();
@@ -52,6 +70,9 @@ class Token
         return $response->get()['token'];
     }
 
+    /**
+     * @return mixed
+     */
     public function refresh()
     {
         $token = $this->getNew();

@@ -59,7 +59,12 @@ class GuzzleAdapter extends AbstractAdapter
         }
         return Response::createFromJson($response);
     }
-    
+
+    /**
+     * @param $key
+     * @param $value
+     * @return $this
+     */
     public function setHeader($key, $value)
     {
         $this->params['headers'][$key] = $value;
